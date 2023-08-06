@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 // Require MongoClient class (Object needed for connection).
 const { MongoClient } = require('mongodb');
+const { User, Thought } = require('./models/index');
 const app = express();
 const port = 3001;
 // Connection address. 
