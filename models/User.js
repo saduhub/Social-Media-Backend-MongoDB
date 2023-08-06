@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
     // Self reference. Recursive, as it is a one to many, but it is self referencing.
     friends: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'friend'
+        ref: 'user'
     }],
     // Use built in date method to get current date
     lastAccessed: { type: Date, default: Date.now },
