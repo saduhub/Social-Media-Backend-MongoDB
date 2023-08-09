@@ -70,4 +70,41 @@ router.delete('/:user', async (req, res) => {
   }
 });
 
+// Add friends
+router.post('/add/:user', async (req, res) => {
+    try {
+    //   console.log('Adding friend to user:', req.params.user);
+      const user = await User.findOne({ username: req.params.user });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }   
+    //   Becuase of the user schema, mongoose automatically knows that id's pushed are object id's.
+      user.friends.push(req.body.userId);
+      user.save();
+      res.status(200).json(user);
+      console.log('Added Friend');
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: err });
+    }
+  });
+// Remove friends
+router.delete('/remove/:user', async (req, res) => {
+    try {
+      console.log('Removing friend from user:', req.params.user);
+      const user = await User.findOne({ username: req.params.user });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }   
+    // Only keep id's that do not match userId.
+      user.friends = user.friends.filter((friend) => friend.toString() !== req.body.userId)
+      user.save();
+      res.status(200).json(user);
+      console.log('Removed Friend');
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: err });
+    }
+  });
+
 module.exports = router;
