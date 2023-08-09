@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Thought, User } = require('../../models/');
+const { Thought, User, Reaction } = require('../../models/');
 // Find all Thought documents
 router.get('/all', async (req, res) => {
     try {
@@ -86,28 +86,35 @@ router.delete('/:userId', async (req, res) => {
   }
 });
 // Create reactions to store in reaction array inside each thought.
-// router.post('/reaction', async (req, res) => {
+router.post('/reaction/:userId', async (req, res) => {
+    try {
+      const thought = await Thought.findOne({ userId: req.params.userId });
+
+      // Create a new Reaction document
+      const newReaction = new Reaction({
+          reactionBody: req.body.reactionBody, 
+          username: req.body.username,
+      });
+      console.log(newReaction);
+
+      thought.reactions.push(newReaction);
+      // Add error handling here later.
+      thought.save();
+      res.status(200).json(thought);
+    }
+    catch (err) {
+      console.log(err);
+      res.status(500).json({ message: err });
+    }
+  });
+
+// Delete reactions by readctionId value
+// router.delete('/reaction/:userId', async (req, res) => {
 //     try {
-//       const newThought = new Thought({ 
-//         thoughtText: req.body.thoughtText,
-//         username: req.body.username,
-//         userId: req.body.userId,
-//       });
-//       // Add error handling here later.
-//       newThought.save();
-//       // Find user by the username that is being used to create thought.
-//       const user = await User.findOne({ username: req.body.username });
-//       if (!user) {
-//       return res.status(404).json({ message: 'User not found' });
-//       }  
-//       // Push thought created into thoughts array belonging to user.
-//       user.thoughts.push(newThought._id);
-//       user.save();
-//       res.status(200).json(newThought);
+//       get thought, access reactions, filter reactions with different reactionId, save
 //     }
 //     catch (err) {
-//       console.log(err);
-//       res.status(500).json({ message: err });
+//       
 //     }
 //   });
 
