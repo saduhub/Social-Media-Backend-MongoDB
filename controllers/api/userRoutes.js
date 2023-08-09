@@ -11,7 +11,7 @@ router.get('/all', async (req, res) => {
     }
   });
 // Create User documents
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const newUser = new User({ 
       username: req.body.username,
