@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../../models/');
+const { User, Thought } = require('../../models/');
 // Find all User documents
 router.get('/all', async (req, res) => {
     try {
@@ -52,9 +52,10 @@ router.put('/:user', async (req, res) => {
     res.status(500).json({ message: err });
   }
 });
-// Delete User documents
+// Delete User documents and User thoughts
 router.delete('/:user', async (req, res) => {
   try {
+    const userThoughts = await Thought.deleteMany({username: req.params.user})
     // console.log('Updating user:', req.params.user);
     const deletedUser = await User.findOneAndDelete({ username: req.params.user });
 
@@ -63,7 +64,7 @@ router.delete('/:user', async (req, res) => {
     } 
 
     res.status(200).json(deletedUser);
-    console.log('User deleted');
+    console.log('User and Thoughts deleted');
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err });
