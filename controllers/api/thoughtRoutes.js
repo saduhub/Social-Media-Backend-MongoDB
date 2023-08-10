@@ -96,7 +96,8 @@ router.post('/reaction/:userId', async (req, res) => {
           username: req.body.username,
       });
       console.log(newReaction);
-
+      // Need to save reaction
+      newReaction.save();
       thought.reactions.push(newReaction);
       // Add error handling here later.
       thought.save();
@@ -109,13 +110,24 @@ router.post('/reaction/:userId', async (req, res) => {
   });
 
 // Delete reactions by readctionId value
-// router.delete('/reaction/:userId', async (req, res) => {
-//     try {
-//       get thought, access reactions, filter reactions with different reactionId, save
-//     }
-//     catch (err) {
-//       
-//     }
-//   });
+router.delete('/reaction/:userId', async (req, res) => {
+    try {
+      // get thought, access reactions, filter reactions with different reactionId, save
+      const reactionId = req.body.reactionId;
+      const thought = await Thought.findOne({ userId: req.params.userId});
+
+      if (!thought) {
+        return res.status(404).json({ message: 'Thought not found' 
+        });
+      }
+      thought.reactions = thought.reactions.filter((reaction) => reaction._id.toString() !== reactionId);
+      thought.save();
+      const deleteReaction = await Reaction.findByIdAndDelete({ _id: req.body.reactionId });
+      res.status(200).json(deleteReaction);
+    }
+    catch (err) {
+      
+    }
+  });
 
 module.exports = router;
