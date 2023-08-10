@@ -3,6 +3,4 @@ node_modules
 .dccache
 package-lock.json
 .env
-.init.sql
-README.md
 tests
