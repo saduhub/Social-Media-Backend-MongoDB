@@ -1,0 +1,10 @@
+<section class="home-section">
+    <h1>Home</h1>
+    <div class="user-list">
+        {{#each users as |user| }}
+        <div class="user-card">
+            <h2>{{user.email}}</h2>
+        </div>
+        {{/each}}
+    </div>
+</section>

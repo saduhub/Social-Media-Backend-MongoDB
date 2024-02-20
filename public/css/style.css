@@ -1,0 +1,55 @@
+/* Josh W Comeau Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+
+input, button, textarea, select {
+    font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+}
+
+#root, #__next {
+    isolation: isolate;
+}
+/* Font */
+@font-face {
+    font-family: 'Work Sans';
+    src: url('../fonts/WorkSans-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;  
+    font-style: normal;
+}
+/* Additional Global Styles */
+body {
+    background-color: white;
+    color: black;
+    font-family: 'Work Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    /* padding: 1rem; */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    min-width: 280px;
+}
+
+main {
+    width: 100%;
+}
+
