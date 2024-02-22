@@ -7,6 +7,9 @@
     {{#if showPayload}}
     <div id="payload">
         <h2>Payload</h2>
+        {{#if deleteAction}}
+            {{> deleteForm }}
+        {{/if}}
     </div>
     {{/if}}
     {{#if showDisplay}}

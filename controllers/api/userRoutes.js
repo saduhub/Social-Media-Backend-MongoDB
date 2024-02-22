@@ -74,13 +74,20 @@ router.delete('/:user', async (req, res) => {
   try {
     const userThoughts = await Thought.deleteMany({username: req.params.user})
     // console.log('Updating user:', req.params.user);
-    const deletedUser = await User.findOneAndDelete({ username: req.params.user });
+    const deletedUser = await User.findOneAndDelete({ _id: req.params.user });
 
     if (!deletedUser) {
       return res.status(404).json({ message: 'User not found' });
     } 
-
-    res.status(200).json(deletedUser);
+    // Need to refresh on clint side?
+    const users = await User.find({}).lean();
+      res.render('home', { 
+        users, 
+        layout: 'main',
+        showPayload: true,
+        showDisplay: true,
+        showUsers: true  
+    });
     console.log('User and Thoughts deleted');
   } catch (err) {
     console.log(err);
