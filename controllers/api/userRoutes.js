@@ -79,7 +79,7 @@ router.delete('/:user', async (req, res) => {
     if (!deletedUser) {
       return res.status(404).json({ message: 'User not found' });
     } 
-    // Need to refresh on clint side?
+    // Need to refresh on client side?
     const users = await User.find({}).lean();
       res.render('home', { 
         users, 

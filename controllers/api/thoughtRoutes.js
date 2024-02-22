@@ -63,9 +63,9 @@ router.put('/:userId', async (req, res) => {
   }
 });
 // Delete Thought documents
-router.delete('/:userId', async (req, res) => {
+router.delete('/:thought', async (req, res) => {
   try {
-    const thought = await Thought.findOne({ userId: req.params.userId });
+    const thought = await Thought.findOne({ _id: req.params.thought });
     const thoughtUsername = thought.username;
     const thoughtObjId = thought._id;
     // console.log(thoughtUsername);
@@ -76,12 +76,12 @@ router.delete('/:userId', async (req, res) => {
         return res.status(404).json({ message: 'User not found' 
         });
     }
-    console.log(user);
+    // console.log(user);
     user.thoughts = user.thoughts.filter((thought) => thought.toString() !== thoughtObjId.toString())
     // console.log(user.thoughts);
     user.save();
 
-    const deletedThought = await Thought.findOneAndDelete({ userId: req.params.userId });
+    const deletedThought = await Thought.findOneAndDelete({ _id: req.params.thought });
 
     if (!deletedThought) {
       return res.status(404).json({ message: 'Thought not found' });

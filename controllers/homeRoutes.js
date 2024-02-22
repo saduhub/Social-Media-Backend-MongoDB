@@ -24,7 +24,23 @@ router.get('/deleteuser', async (req, res) => {
         showDisplay: true,
         showUsers: true,
         // Render partial
-        deleteAction: true  
+        deleteUserAction: true  
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+});
+// Get thought delete page
+router.get('/deletethought', async (req, res) => {
+    try {
+      const thoughts = await Thought.find({}).lean();
+      res.render('home', { 
+        thoughts, 
+        layout: 'main',
+        showPayload: true,
+        showDisplay: true,
+        showThoughts: true,
+        deleteThoughtAction: true  
       });
     } catch (err) {
       res.status(500).json(err);
