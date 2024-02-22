@@ -9,6 +9,12 @@ const port = 3001;
 
 const hbs = exphbs.create({
   partialsDir: ['views/partials/'],
+  helpers: {
+    // Can add helpers to another file and import.
+    json: function (context) {
+      return JSON.stringify(context, null, 2);
+    }
+  }
 });
 
 app.engine('handlebars', hbs.engine);

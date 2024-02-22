@@ -11,13 +11,15 @@ const { User, Thought } = require('../../models/');
 //     }
 // });
 // Find all User documents (Generate view)
-router.get('/all', async (req, res) => {
+router.get('/allusers', async (req, res) => {
     try {
       const users = await User.find({}).lean();
       // console.log(users)
       res.render('home', { 
         users, 
-        layout: 'main', 
+        layout: 'main',
+        showPayload: false,
+        showDisplay: true 
       });
     } catch (err) {
       console.log(Error);

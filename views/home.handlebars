@@ -1,9 +1,18 @@
 <section class="home-section">
     <h1>Social Media Admin</h1>
-    <div class="payload">
-        {{Form}}
+    {{#if isHomePage}}
+    <p>Welcome to the Social Media Admin Panel. Here you can manage users, thoughts, and more.</p>
+    {{/if}}
+
+    {{#if showPayload}}
+    <div id="payload">
+        <h2>Payload</h2>
     </div>
-    <div class="display">
-        {{Info}}
+    {{/if}}
+    {{#if showDisplay}}
+    <div id="display">
+        <h2>Display</h2>
+        <pre class="bg-light p-3 border rounded overflow-auto"><code>{{json users}}</code></pre>
     </div>
+    {{/if}}
 </section>
