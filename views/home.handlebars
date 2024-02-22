@@ -12,7 +12,14 @@
     {{#if showDisplay}}
     <div id="display">
         <h2>Display</h2>
-        <pre class="bg-light p-3 border rounded overflow-auto"><code>{{json users}}</code></pre>
+        <pre class="bg-light p-3 border rounded overflow-auto">
+            {{#if showThoughts}}
+            <code>{{json thoughts }}</code>
+            {{/if}}
+            {{#if showUsers}}
+            <code>{{json users }}</code>
+            {{/if}}
+        </pre>
     </div>
     {{/if}}
 </section>

@@ -1,15 +1,23 @@
 const router = require('express').Router();
 const { Thought, User, Reaction } = require('../../models/');
-// Find all Thought documents
-router.get('/all', async (req, res) => {
-    try {
-      const thoughts = await Thought.find({});
-      res.status(200).json(thoughts);
-    } catch (err) {
-      console.log(Error);
-      res.status(500).json({ message: err });
-    }
-  });
+// Find and display all Thought documents
+router.get('/allthoughts', async (req, res) => {
+  try {
+    const thoughts = await Thought.find({}).lean();
+    // console.log(thoughts)
+    res.render('home', { 
+      thoughts, 
+      layout: 'main',
+      showPayload: false,
+      showDisplay: true, 
+      showThoughts: true 
+    });
+  } catch (err) {
+    console.log(Error);
+    res.status(500).json({ message: err });
+  }
+});
+
 // Create Thought documents and save reference to user.
 router.post('/', async (req, res) => {
   try {

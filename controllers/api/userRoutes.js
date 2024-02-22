@@ -19,7 +19,8 @@ router.get('/allusers', async (req, res) => {
         users, 
         layout: 'main',
         showPayload: false,
-        showDisplay: true 
+        showDisplay: true,
+        showUsers: true  
       });
     } catch (err) {
       console.log(Error);
