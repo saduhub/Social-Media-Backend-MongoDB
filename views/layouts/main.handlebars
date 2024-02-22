@@ -12,6 +12,27 @@
     <link rel="stylesheet" href="/css/footer.css">
   </head>
   <body>
+    {{!-- Header --}}
+<header>
+  <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Get Users</a>
+        <a class="nav-link" href="#">Create User</a>
+        <a class="nav-link" href="#">Update User</a>
+        <a class="nav-link" href="#">Delete User</a>
+        <a class="nav-link text-warning" href="#">Add Friend</a>
+        <a class="nav-link text-warning" href="#">Remove Friend</a>
+        <a class="nav-link text-success" href="#">Get Thoughts</a>
+        <a class="nav-link text-success" href="#">Create Thought</a>
+        <a class="nav-link text-success" href="#">Update Thought</a>
+        <a class="nav-link text-success" href="#">Delete Thought</a>
+        <a class="nav-link text-info" href="#">Create Reaction</a>
+        <a class="nav-link text-info" href="#">Delete Reaction</a>
+      </li>
+    </ul>
+  </nav>
+</header>
     {{!-- main --}}
     <main class="main-container">
       {{{body}}}
