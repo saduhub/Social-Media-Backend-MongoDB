@@ -106,6 +106,38 @@ const deleteReactionHandler = async (event) => {
         }
     }
 };
+// Update User
+const updateUserHandler = async (event) => {
+    event.preventDefault();
+    const username = document.querySelector('#username').value.trim();
+    const newUsername = document.querySelector('#new-username').value.trim();
+    const newEmail = document.querySelector('#new-email').value.trim();
+
+    // if (!newUsername || !username || !newEmail) {
+    //     document.getElementById('error-message').textContent = 'Empty field. Please check your input.';
+    //     showModal();
+    //     return;
+    // }
+
+    if (newUsername && username && newEmail) {
+        const response = await fetch(`/api/user/${username}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                newEmail: newEmail,
+                newUsername: newUsername,
+            }),
+        });
+
+        if (response.ok) {
+            // document.getElementById('error-message').textContent = 'Thought successfully deleted.';
+            // showModal();
+            return;
+        } else {
+            console.log('Something went wrong');
+        }
+    }
+};
 // Delete User
 const deleteUserForm = document.querySelector('#delete-user-form');
 if (deleteUserForm) {
@@ -125,6 +157,11 @@ if (removeFriendForm) {
 const deleteReactionForm = document.querySelector('#delete-reaction-form');
 if (deleteReactionForm) {
     deleteReactionForm.addEventListener('submit', deleteReactionHandler);
+}
+// Update User
+const updateUserForm = document.querySelector('#update-user-form');
+if (updateUserForm) {
+    updateUserForm.addEventListener('submit', updateUserHandler);
 }
 // Highlight nav links
 document.addEventListener('DOMContentLoaded', function() {

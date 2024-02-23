@@ -47,22 +47,31 @@ router.post('/', async (req, res) => {
 // Update User documents
 router.put('/:user', async (req, res) => {
   try {
-    // console.log('Updating user:', req.params.user);
+    console.log('Updating user:', req.params.user, 'using:', req.body.newUsername, req.body.newEmail,);
     const updatedUser = await User.findOneAndUpdate(
         // Find doc matching username.
         { username: req.params.user },
         // Replaces name with new username.
         { 
-          username: req.body.username,
-          email: req.body.email,
+          username: req.body.newUsername,
+          email: req.body.newEmail,
          },
         // Return updated document.
         { new: true }
-      );
+    );
+    console.log(updatedUser);
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
     }   
-    res.status(200).json(updatedUser);
+    // res.status(200).json(updatedUser);
+    const users = await User.find({}).lean();
+    res.render('home', { 
+      users, 
+      layout: 'main',
+      showPayload: true,
+      showDisplay: true,
+      showUsers: true  
+    });
     console.log('Success');
   } catch (err) {
     console.log(err);
@@ -81,7 +90,7 @@ router.delete('/:user', async (req, res) => {
     } 
     // Need to refresh on client side?
     const users = await User.find({}).lean();
-      res.render('home', { 
+    res.render('home', { 
         users, 
         layout: 'main',
         showPayload: true,

@@ -78,5 +78,21 @@ router.get('/deleteReaction', async (req, res) => {
       res.status(500).json(err);
     }
 });
+// Get user update page
+router.get('/updateUser', async (req, res) => {
+    try {
+      const users = await User.find({}).lean();
+      res.render('home', { 
+        users, 
+        layout: 'main',
+        showPayload: true,
+        showDisplay: true,
+        showUsers: true,
+        updateUserAction: true  
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+});
 
 module.exports = router;
