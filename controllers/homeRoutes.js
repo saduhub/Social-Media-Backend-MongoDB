@@ -46,5 +46,21 @@ router.get('/deletethought', async (req, res) => {
       res.status(500).json(err);
     }
 });
+// Get friend remove page
+router.get('/removefriend', async (req, res) => {
+    try {
+      const users = await User.find({}).lean();
+      res.render('home', { 
+        users, 
+        layout: 'main',
+        showPayload: true,
+        showDisplay: true,
+        showUsers: true,
+        removeFriendAction: true  
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+});
 
 module.exports = router;

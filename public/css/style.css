@@ -57,6 +57,14 @@ header, header .navbar {
     height: 100%; 
     overflow-y: auto;
 }
+
+.nav-ul {
+    margin: 0 auto; 
+}
+
+.nav-link.active {
+    background-color: #343a40; 
+}
   
 main {
     height: 100%;

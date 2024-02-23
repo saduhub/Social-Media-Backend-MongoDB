@@ -7,11 +7,17 @@
     {{#if showPayload}}
     <div id="payload">
         <h2>Payload</h2>
+        {{!-- Delete User Form --}}
         {{#if deleteUserAction}}
             {{> deleteUserForm }}
         {{/if}}
+         {{!-- Delete Thought Form --}}
         {{#if deleteThoughtAction}}
             {{> deleteThoughtForm }}
+        {{/if}}
+         {{!-- Remove Friend Form --}}
+        {{#if removeFriendAction}}
+            {{> removeFriendForm }}
         {{/if}}
     </div>
     {{/if}}
