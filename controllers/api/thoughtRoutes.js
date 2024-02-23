@@ -44,18 +44,26 @@ router.post('/', async (req, res) => {
   }
 });
 // Update Thought documents
-router.put('/:userId', async (req, res) => {
+router.put('/:thoughtId', async (req, res) => {
   try {
-    console.log('Updating thought:', req.params.userId);
+    console.log('Updating thought:', req.params.thoughtId);
     const updatedThought = await Thought.findOneAndUpdate(
-        { userId: req.params.userId },
-        { thoughtText: req.body.thoughtText },
+        { _id: req.params.thoughtId },
+        { thoughtText: req.body.newThought },
         { new: true }
     );
     if (!updatedThought) {
       return res.status(404).json({ message: 'Thought not found' });
     }   
-    res.status(200).json(updatedThought);
+    // res.status(200).json(updatedThought);
+    const thoughts = await Thought.find({}).lean();
+    res.render('home', { 
+      thoughts, 
+      layout: 'main',
+      showPayload: false,
+      showDisplay: true, 
+      showThoughts: true 
+    });
     console.log('Success');
   } catch (err) {
     console.log(err);

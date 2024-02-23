@@ -138,6 +138,37 @@ const updateUserHandler = async (event) => {
         }
     }
 };
+// Update Thought
+const updateThoughtHandler = async (event) => {
+    event.preventDefault();
+    const thoughtId = document.querySelector('#thought-id').value.trim();
+    const newThought = document.querySelector('#new-thought').value.trim();
+
+    // if (!thoughtId || !newThought) {
+    //     document.getElementById('error-message').textContent = 'Empty field. Please check your input.';
+    //     showModal();
+    //     return;
+    // }
+
+    if (thoughtId && newThought) {
+        const response = await fetch(`/api/thought/${thoughtId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                thoughtId: thoughtId,
+                newThought: newThought,
+            }),
+        });
+
+        if (response.ok) {
+            // document.getElementById('error-message').textContent = 'Thought successfully deleted.';
+            // showModal();
+            return;
+        } else {
+            console.log('Something went wrong');
+        }
+    }
+};
 // Delete User
 const deleteUserForm = document.querySelector('#delete-user-form');
 if (deleteUserForm) {
@@ -162,6 +193,11 @@ if (deleteReactionForm) {
 const updateUserForm = document.querySelector('#update-user-form');
 if (updateUserForm) {
     updateUserForm.addEventListener('submit', updateUserHandler);
+}
+// Update Thought
+const updateThoughtForm = document.querySelector('#update-thought-form');
+if (updateThoughtForm) {
+    updateThoughtForm.addEventListener('submit', updateThoughtHandler);
 }
 // Highlight nav links
 document.addEventListener('DOMContentLoaded', function() {
