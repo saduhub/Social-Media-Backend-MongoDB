@@ -132,9 +132,11 @@ router.delete('/reaction/:userId', async (req, res) => {
       thought.save();
       const deleteReaction = await Reaction.findByIdAndDelete({ _id: req.body.reactionId });
       res.status(200).json(deleteReaction);
+      console.log('Deleted reaction');
     }
     catch (err) {
-      
+      console.log(err);
+      res.status(500).json({ message: err });
     }
   });
 

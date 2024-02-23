@@ -62,5 +62,21 @@ router.get('/removefriend', async (req, res) => {
       res.status(500).json(err);
     }
 });
+// Get delete reaction page
+router.get('/deleteReaction', async (req, res) => {
+    try {
+      const thoughts = await Thought.find({}).lean();
+      res.render('home', { 
+        thoughts, 
+        layout: 'main',
+        showPayload: true,
+        showDisplay: true,
+        showThoughts: true,
+        deleteReactionAction: true  
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+});
 
 module.exports = router;

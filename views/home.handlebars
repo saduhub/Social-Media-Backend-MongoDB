@@ -11,13 +11,17 @@
         {{#if deleteUserAction}}
             {{> deleteUserForm }}
         {{/if}}
-         {{!-- Delete Thought Form --}}
+        {{!-- Delete Thought Form --}}
         {{#if deleteThoughtAction}}
             {{> deleteThoughtForm }}
         {{/if}}
-         {{!-- Remove Friend Form --}}
+        {{!-- Remove Friend Form --}}
         {{#if removeFriendAction}}
             {{> removeFriendForm }}
+        {{/if}}
+        {{!-- Delete Reaction --}}
+        {{#if deleteReactionAction}}
+            {{> deleteReactionForm }}
         {{/if}}
     </div>
     {{/if}}

@@ -78,6 +78,34 @@ const removeFriendHandler = async (event) => {
         }
     }
 };
+// Delete Reaction
+const deleteReactionHandler = async (event) => {
+    event.preventDefault();
+    const userId = document.querySelector('#user-id').value.trim();
+    const deleteId = document.querySelector('#delete-reaction').value.trim();
+
+    // if (!deleteId || !username) {
+    //     document.getElementById('error-message').textContent = 'Empty field. Please check your input.';
+    //     showModal();
+    //     return;
+    // }
+
+    if (deleteId && userId) {
+        const response = await fetch(`/api/thought/reaction/${userId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ reactionId: deleteId }),
+        });
+
+        if (response.ok) {
+            // document.getElementById('error-message').textContent = 'Thought successfully deleted.';
+            // showModal();
+            return;
+        } else {
+            console.log('Something went wrong');
+        }
+    }
+};
 // Delete User
 const deleteUserForm = document.querySelector('#delete-user-form');
 if (deleteUserForm) {
@@ -92,6 +120,11 @@ if (deleteThoughtForm) {
 const removeFriendForm = document.querySelector('#remove-friend-form');
 if (removeFriendForm) {
     removeFriendForm.addEventListener('submit', removeFriendHandler);
+}
+// Delete Reaction
+const deleteReactionForm = document.querySelector('#delete-reaction-form');
+if (deleteReactionForm) {
+    deleteReactionForm.addEventListener('submit', deleteReactionHandler);
 }
 // Highlight nav links
 document.addEventListener('DOMContentLoaded', function() {
