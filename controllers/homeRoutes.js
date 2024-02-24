@@ -31,6 +31,23 @@ router.get('/createuser', async (req, res) => {
     }
 });
 
+// Get thought create page
+router.get('/createthought', async (req, res) => {
+    try {
+      const thoughts = await Thought.find({}).lean();
+      res.render('home', { 
+        thoughts, 
+        layout: 'main',
+        showPayload: true,
+        showDisplay: true,
+        showThoughts: true,
+        createThoughtAction: true  
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+});
+
 // Get user delete page
 router.get('/deleteuser', async (req, res) => {
     try {

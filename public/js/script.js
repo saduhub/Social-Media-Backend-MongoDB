@@ -168,6 +168,34 @@ const createUserHandler = async (event) => {
 // create Thought
 const createThoughtHandler = async (event) => {
     event.preventDefault();
+    const username = document.querySelector('#username').value.trim();
+    const thoughtText = document.querySelector('#thought-text').value.trim();
+    // const userId = document.querySelector('#user-id').value.trim();
+    // if (!thoughtText || !username) {
+    //     document.getElementById('error-message').textContent = 'Empty field. Please check your input.';
+    //     showModal();
+    //     return;
+    // }
+
+    if (username && thoughtText) {
+        const response = await fetch(`/api/thought/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                username: username,
+                thoughtText: thoughtText,
+                // userId: userId,
+            }),
+        });
+
+        if (response.ok) {
+            // document.getElementById('error-message').textContent = 'Thought successfully deleted.';
+            // showModal();
+            return;
+        } else {
+            console.log('Something went wrong');
+        }
+    }
 };
 // Update User
 const updateUserHandler = async (event) => {

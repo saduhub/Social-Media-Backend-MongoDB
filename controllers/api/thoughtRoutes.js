@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
     const newThought = new Thought({ 
       thoughtText: req.body.thoughtText,
       username: req.body.username,
-      userId: req.body.userId,
+      userId: `${req.body.username}-user`,
     });
     // Add error handling here later.
     newThought.save();
@@ -36,7 +36,16 @@ router.post('/', async (req, res) => {
     // Push thought created into thoughts array belonging to user.
     user.thoughts.push(newThought._id);
     user.save();
-    res.status(200).json(newThought);
+    // res.status(200).json(newThought);
+    const thoughts = await Thought.find({}).lean();
+    // console.log(thoughts)
+    res.render('home', { 
+      thoughts, 
+      layout: 'main',
+      showPayload: true,
+      showDisplay: true, 
+      showThoughts: true,
+    });
   }
   catch (err) {
     console.log(err);
