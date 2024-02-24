@@ -47,7 +47,7 @@ router.post('/', async (req, res) => {
 // Update User documents
 router.put('/:user', async (req, res) => {
   try {
-    console.log('Updating user:', req.params.user, 'using:', req.body.newUsername, req.body.newEmail,);
+    // console.log('Updating user:', req.params.user, 'using:', req.body.newUsername, req.body.newEmail,);
     const updatedUser = await User.findOneAndUpdate(
         // Find doc matching username.
         { username: req.params.user },
@@ -59,7 +59,7 @@ router.put('/:user', async (req, res) => {
         // Return updated document.
         { new: true }
     );
-    console.log(updatedUser);
+    // console.log(updatedUser);
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
     }   
@@ -107,15 +107,15 @@ router.delete('/:user', async (req, res) => {
 // Add friends
 router.post('/add/:user', async (req, res) => {
     try {
-    //   console.log('Adding friend to user:', req.params.user);
+      // console.log('Adding friend to user:', req.params.user);
       const user = await User.findOne({ username: req.params.user });
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }   
-    //   Becuase of the user schema, mongoose automatically knows that id's pushed are object id's.
-      user.friends.push(req.body.userId);
+      //   Becuase of the user schema, mongoose automatically knows that id's pushed are object id's.
+      user.friends.push(req.body.addId);
       user.save();
-      res.status(200).json(user);
+      // res.status(200).json(user);
       console.log('Added Friend');
     } catch (err) {
       console.log(err);

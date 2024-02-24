@@ -62,6 +62,22 @@ router.get('/removefriend', async (req, res) => {
       res.status(500).json(err);
     }
 });
+// Get friend add page
+router.get('/addfriend', async (req, res) => {
+    try {
+      const users = await User.find({}).lean();
+      res.render('home', { 
+        users, 
+        layout: 'main',
+        showPayload: true,
+        showDisplay: true,
+        showUsers: true,
+        addFriendAction: true  
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+});
 // Get delete reaction page
 router.get('/deleteReaction', async (req, res) => {
     try {

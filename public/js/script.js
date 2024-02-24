@@ -78,6 +78,34 @@ const removeFriendHandler = async (event) => {
         }
     }
 };
+// Add Friend
+const addFriendHandler = async (event) => {
+    event.preventDefault();
+    const username = document.querySelector('#username').value.trim();
+    const addId = document.querySelector('#add-friend').value.trim();
+
+    // if (!addId || !username) {
+    //     document.getElementById('error-message').textContent = 'Empty field. Please check your input.';
+    //     showModal();
+    //     return;
+    // }
+
+    if (addId && username) {
+        const response = await fetch(`/api/user/add/${username}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ addId: addId }),
+        });
+
+        if (response.ok) {
+            // document.getElementById('error-message').textContent = 'Friend successfully added.';
+            // showModal();
+            return;
+        } else {
+            console.log('Something went wrong');
+        }
+    }
+};
 // Delete Reaction
 const deleteReactionHandler = async (event) => {
     event.preventDefault();
@@ -183,6 +211,11 @@ if (deleteThoughtForm) {
 const removeFriendForm = document.querySelector('#remove-friend-form');
 if (removeFriendForm) {
     removeFriendForm.addEventListener('submit', removeFriendHandler);
+}
+// Add Friend
+const addFriendForm = document.querySelector('#add-friend-form');
+if (addFriendForm) {
+    addFriendForm.addEventListener('submit', addFriendHandler);
 }
 // Delete Reaction
 const deleteReactionForm = document.querySelector('#delete-reaction-form');
