@@ -7,6 +7,10 @@
     {{#if showPayload}}
     <div id="payload">
         <h2>Payload</h2>
+        {{!-- Create User Form --}}
+        {{#if createUserAction}}
+            {{> createUserForm }}
+        {{/if}}
         {{!-- Delete User Form --}}
         {{#if deleteUserAction}}
             {{> deleteUserForm }}

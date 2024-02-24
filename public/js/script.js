@@ -134,6 +134,37 @@ const deleteReactionHandler = async (event) => {
         }
     }
 };
+// create User
+const createUserHandler = async (event) => {
+    event.preventDefault();
+    const username = document.querySelector('#username').value.trim();
+    const email = document.querySelector('#email').value.trim();
+
+    // if (!newUsername || !username || !newEmail) {
+    //     document.getElementById('error-message').textContent = 'Empty field. Please check your input.';
+    //     showModal();
+    //     return;
+    // }
+
+    if (username && email) {
+        const response = await fetch(`/api/user/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                email: email,
+                username: username,
+            }),
+        });
+
+        if (response.ok) {
+            // document.getElementById('error-message').textContent = 'Thought successfully deleted.';
+            // showModal();
+            return;
+        } else {
+            console.log('Something went wrong');
+        }
+    }
+};
 // Update User
 const updateUserHandler = async (event) => {
     event.preventDefault();
@@ -185,6 +216,8 @@ const updateThoughtHandler = async (event) => {
             body: JSON.stringify({ 
                 thoughtId: thoughtId,
                 newThought: newThought,
+                thoughts: '',
+                friends: '',
             }),
         });
 
@@ -197,6 +230,11 @@ const updateThoughtHandler = async (event) => {
         }
     }
 };
+// Create User
+const createUserForm = document.querySelector('#create-user-form');
+if (createUserForm) {
+    createUserForm.addEventListener('submit', createUserHandler);
+}
 // Delete User
 const deleteUserForm = document.querySelector('#delete-user-form');
 if (deleteUserForm) {
