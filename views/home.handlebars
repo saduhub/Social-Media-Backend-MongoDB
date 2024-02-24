@@ -11,8 +11,13 @@
         {{#if createUserAction}}
             {{> createUserForm }}
         {{/if}}
+        {{!-- Create Thought Form --}}
         {{#if createThoughtAction}}
             {{> createThoughtForm }}
+        {{/if}}
+        {{!-- Create Reaction Form --}}
+        {{#if createReactionAction}}
+            {{> createReactionForm }}
         {{/if}}
         {{!-- Delete User Form --}}
         {{#if deleteUserAction}}

@@ -111,9 +111,9 @@ router.delete('/:thought', async (req, res) => {
   }
 });
 // Create reactions to store in reaction array inside each thought.
-router.post('/reaction/:userId', async (req, res) => {
+router.post('/reaction/:thoughtId', async (req, res) => {
     try {
-      const thought = await Thought.findOne({ userId: req.params.userId });
+      const thought = await Thought.findOne({ _id: req.params.thoughtId });
 
       // Create a new Reaction document
       const newReaction = new Reaction({

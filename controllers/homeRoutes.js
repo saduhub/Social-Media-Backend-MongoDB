@@ -47,6 +47,22 @@ router.get('/createthought', async (req, res) => {
       res.status(500).json(err);
     }
 });
+// Get reaction create page
+router.get('/createreaction', async (req, res) => {
+    try {
+      const thoughts = await Thought.find({}).lean();
+      res.render('home', { 
+        thoughts, 
+        layout: 'main',
+        showPayload: true,
+        showDisplay: true,
+        showThoughts: true,
+        createReactionAction: true  
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+});
 
 // Get user delete page
 router.get('/deleteuser', async (req, res) => {

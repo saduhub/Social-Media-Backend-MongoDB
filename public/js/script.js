@@ -189,7 +189,38 @@ const createThoughtHandler = async (event) => {
         });
 
         if (response.ok) {
-            // document.getElementById('error-message').textContent = 'Thought successfully deleted.';
+            // document.getElementById('error-message').textContent = 'Thought successfully created.';
+            // showModal();
+            return;
+        } else {
+            console.log('Something went wrong');
+        }
+    }
+};
+// Create Reaction
+const createReactionHandler = async (event) => {
+    event.preventDefault();
+    const username = document.querySelector('#username').value.trim();
+    const reactionBody = document.querySelector('#reaction-body').value.trim();
+    const thoughtId = document.querySelector('#thought-id').value.trim();
+    // if (!reactionBody || !username || !thoughtId) {
+    //     document.getElementById('error-message').textContent = 'Empty field. Please check your input.';
+    //     showModal();
+    //     return;
+    // }
+
+    if (username && reactionBody && thoughtId) {
+        const response = await fetch(`/api/thought/reaction/${thoughtId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                username: username,
+                reactionBody: reactionBody,
+            }),
+        });
+
+        if (response.ok) {
+            // document.getElementById('error-message').textContent = 'Reaction successfully created.';
             // showModal();
             return;
         } else {
@@ -266,6 +297,11 @@ const updateThoughtHandler = async (event) => {
 const createUserForm = document.querySelector('#create-user-form');
 if (createUserForm) {
     createUserForm.addEventListener('submit', createUserHandler);
+}
+// Create Reaction
+const createReactionForm = document.querySelector('#create-reaction-form');
+if (createReactionForm) {
+    createReactionForm.addEventListener('submit', createReactionHandler);
 }
 // Create Thought
 const createThoughtForm = document.querySelector('#create-thought-form');
