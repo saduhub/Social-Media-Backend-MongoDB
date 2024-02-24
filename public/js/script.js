@@ -165,6 +165,10 @@ const createUserHandler = async (event) => {
         }
     }
 };
+// create Thought
+const createThoughtHandler = async (event) => {
+    event.preventDefault();
+};
 // Update User
 const updateUserHandler = async (event) => {
     event.preventDefault();
@@ -234,6 +238,11 @@ const updateThoughtHandler = async (event) => {
 const createUserForm = document.querySelector('#create-user-form');
 if (createUserForm) {
     createUserForm.addEventListener('submit', createUserHandler);
+}
+// Create Thought
+const createThoughtForm = document.querySelector('#create-thought-form');
+if (createThoughtForm) {
+    createThoughtForm.addEventListener('submit', createThoughtHandler);
 }
 // Delete User
 const deleteUserForm = document.querySelector('#delete-user-form');
