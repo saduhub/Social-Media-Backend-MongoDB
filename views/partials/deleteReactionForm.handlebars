@@ -1,11 +1,15 @@
+{{!-- Form --}}
 <form id="delete-reaction-form" class="container">
+    {{!-- Input --}}
     <div class="mb-3">
-        <label for="user-id" class="form-label">UserId of user that wants reaction deleted from their thought:</label>
-        <input type="text" class="form-control" id="user-id">
+        <label for="thought-id" class="form-label">Thought ID of thought that needs reaction deleted:</label>
+        <input type="text" class="form-control" id="thought-id">
     </div>
+    {{!-- Input --}}
     <div class="mb-3">
         <label for="delete-reaction" class="form-label">ID of reaction to be deleted:</label>
         <input type="text" class="form-control" id="delete-reaction">
     </div>
+    {{!-- Button --}}
     <button type="submit" class="btn btn-danger">Delete Reaction</button>
 </form>

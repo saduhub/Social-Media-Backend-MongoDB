@@ -12,7 +12,6 @@ router.get('/', async (req, res) => {
       res.status(500).json(err);
     }
 });
-
 // Get user create page
 router.get('/createuser', async (req, res) => {
     try {
@@ -30,7 +29,6 @@ router.get('/createuser', async (req, res) => {
       res.status(500).json(err);
     }
 });
-
 // Get thought create page
 router.get('/createthought', async (req, res) => {
     try {
@@ -63,7 +61,6 @@ router.get('/createreaction', async (req, res) => {
       res.status(500).json(err);
     }
 });
-
 // Get user delete page
 router.get('/deleteuser', async (req, res) => {
     try {

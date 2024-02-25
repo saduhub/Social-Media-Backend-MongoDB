@@ -12,20 +12,20 @@ const { User, Thought } = require('../../models/');
 // });
 // Find all User documents (Generate view)
 router.get('/allusers', async (req, res) => {
-    try {
-      const users = await User.find({}).lean();
-      // console.log(users)
-      res.render('home', { 
-        users, 
-        layout: 'main',
-        showPayload: false,
-        showDisplay: true,
-        showUsers: true  
-      });
-    } catch (err) {
-      console.log(Error);
-      res.status(500).json({ message: err });
-    }
+  try {
+    const users = await User.find({}).lean();
+    // console.log(users)
+    res.render('home', { 
+      users, 
+      layout: 'main',
+      showPayload: false,
+      showDisplay: true,
+      showUsers: true  
+    });
+  } catch (err) {
+    console.log(Error);
+    res.status(500).json({ message: err });
+  }
 });
 // Create User documents
 router.post('/', async (req, res) => {

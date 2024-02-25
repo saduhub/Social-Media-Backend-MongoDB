@@ -134,12 +134,12 @@ router.post('/reaction/:thoughtId', async (req, res) => {
     }
   });
 
-// Delete reactions by readctionId value
-router.delete('/reaction/:userId', async (req, res) => {
+// Delete reactions by reaction _id value
+router.delete('/reaction/:thoughtId', async (req, res) => {
     try {
       // get thought, access reactions, filter reactions with different reactionId, save
       const reactionId = req.body.reactionId;
-      const thought = await Thought.findOne({ userId: req.params.userId});
+      const thought = await Thought.findOne({ _id: req.params.thoughtId});
 
       if (!thought) {
         return res.status(404).json({ message: 'Thought not found' 
@@ -147,8 +147,8 @@ router.delete('/reaction/:userId', async (req, res) => {
       }
       thought.reactions = thought.reactions.filter((reaction) => reaction._id.toString() !== reactionId);
       thought.save();
-      const deleteReaction = await Reaction.findByIdAndDelete({ _id: req.body.reactionId });
-      res.status(200).json(deleteReaction);
+      const deleteReaction = await Reaction.findByIdAndDelete({ _id: reactionId });
+      // res.status(200).json(deleteReaction);
       console.log('Deleted reaction');
     }
     catch (err) {
