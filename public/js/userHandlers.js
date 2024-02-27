@@ -49,6 +49,8 @@ const createUserHandler = async (event) => {
         if (response.ok) {
             // document.getElementById('error-message').textContent = 'User Successfully Created.';
             // showModal();
+            const updateToUsers = await response.json();
+            window.updateDisplay(updateToUsers);
             return;
         } else {
             console.log('Something went wrong');
@@ -81,6 +83,8 @@ const updateUserHandler = async (event) => {
         if (response.ok) {
             // document.getElementById('error-message').textContent = 'User Successfully Updated.';
             // showModal();
+            const updateToUsers = await response.json();
+            window.updateDisplay(updateToUsers);
             return;
         } else {
             console.log('Something went wrong');

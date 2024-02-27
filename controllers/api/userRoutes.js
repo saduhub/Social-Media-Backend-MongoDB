@@ -1,20 +1,9 @@
 const router = require('express').Router();
 const { User, Thought } = require('../../models/');
-// Find all User documents (Raw data)
-// router.get('/all', async (req, res) => {
-//     try {
-//       const users = await User.find({});
-//       res.status(200).json(users);
-//     } catch (err) {
-//       console.log(Error);
-//       res.status(500).json({ message: err });
-//     }
-// });
-// Find all User documents (Generate view)
+// Find all User documents
 router.get('/allusers', async (req, res) => {
   try {
     const users = await User.find({}).lean();
-    // console.log(users)
     res.render('home', { 
       users, 
       layout: 'main',
@@ -27,7 +16,7 @@ router.get('/allusers', async (req, res) => {
     res.status(500).json({ message: err });
   }
 });
-// Create User documents
+// Create User Documents
 router.post('/', async (req, res) => {
   try {
     const newUser = new User({ 
@@ -36,8 +25,9 @@ router.post('/', async (req, res) => {
       thoughts: req.body.thoughts,
       friends: req.body.friends, 
     });
-    newUser.save();
-    res.status(200).json(newUser);
+    await newUser.save();
+    const users = await User.find({}).lean();
+    res.status(200).json(users);
   }
   catch (err) {
     console.log(err);
@@ -47,7 +37,6 @@ router.post('/', async (req, res) => {
 // Update User documents
 router.put('/:user', async (req, res) => {
   try {
-    // console.log('Updating user:', req.params.user, 'using:', req.body.newUsername, req.body.newEmail,);
     const updatedUser = await User.findOneAndUpdate(
         // Find doc matching username.
         { username: req.params.user },
@@ -57,22 +46,13 @@ router.put('/:user', async (req, res) => {
           email: req.body.newEmail,
          },
         // Return updated document.
-        { new: true }
+        // { new: true }
     );
-    // console.log(updatedUser);
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
     }   
-    // res.status(200).json(updatedUser);
     const users = await User.find({}).lean();
-    res.render('home', { 
-      users, 
-      layout: 'main',
-      showPayload: true,
-      showDisplay: true,
-      showUsers: true  
-    });
-    console.log('Success');
+    res.status(200).json(users);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err });

@@ -7,3 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 });
+// Update display after each action
+function updateDisplay(updateToDocuments) {
+  const displayDiv = document.getElementById('display');
+  const formattedJson = JSON.stringify(updateToDocuments, null, 2);
+  displayDiv.querySelector('code').textContent = formattedJson;
+}
+
+window.updateDisplay = updateDisplay;
