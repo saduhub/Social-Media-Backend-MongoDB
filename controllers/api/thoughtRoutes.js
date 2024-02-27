@@ -4,7 +4,6 @@ const { Thought, User, Reaction } = require('../../models/');
 router.get('/allthoughts', async (req, res) => {
   try {
     const thoughts = await Thought.find({}).lean();
-    // console.log(thoughts)
     res.render('home', { 
       thoughts, 
       layout: 'main',
@@ -17,7 +16,6 @@ router.get('/allthoughts', async (req, res) => {
     res.status(500).json({ message: err });
   }
 });
-
 // Create Thought documents and save reference to user.
 router.post('/', async (req, res) => {
   try {
@@ -26,8 +24,7 @@ router.post('/', async (req, res) => {
       username: req.body.username,
       userId: `${req.body.username}-user`,
     });
-    // Add error handling here later.
-    newThought.save();
+    await newThought.save();
     // Find user by the username that is being used to create thought.
     const user = await User.findOne({ username: req.body.username });
     if (!user) {
@@ -35,17 +32,9 @@ router.post('/', async (req, res) => {
     }  
     // Push thought created into thoughts array belonging to user.
     user.thoughts.push(newThought._id);
-    user.save();
-    // res.status(200).json(newThought);
+    await user.save();
     const thoughts = await Thought.find({}).lean();
-    // console.log(thoughts)
-    res.render('home', { 
-      thoughts, 
-      layout: 'main',
-      showPayload: true,
-      showDisplay: true, 
-      showThoughts: true,
-    });
+    res.status(200).json(thoughts);
   }
   catch (err) {
     console.log(err);
@@ -55,7 +44,6 @@ router.post('/', async (req, res) => {
 // Update Thought documents
 router.put('/:thoughtId', async (req, res) => {
   try {
-    console.log('Updating thought:', req.params.thoughtId);
     const updatedThought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
         { thoughtText: req.body.newThought },
@@ -64,16 +52,8 @@ router.put('/:thoughtId', async (req, res) => {
     if (!updatedThought) {
       return res.status(404).json({ message: 'Thought not found' });
     }   
-    // res.status(200).json(updatedThought);
     const thoughts = await Thought.find({}).lean();
-    res.render('home', { 
-      thoughts, 
-      layout: 'main',
-      showPayload: false,
-      showDisplay: true, 
-      showThoughts: true 
-    });
-    console.log('Success');
+    res.status(200).json(thoughts);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err });
@@ -85,26 +65,21 @@ router.delete('/:thought', async (req, res) => {
     const thought = await Thought.findOne({ _id: req.params.thought });
     const thoughtUsername = thought.username;
     const thoughtObjId = thought._id;
-    // console.log(thoughtUsername);
-    // console.log(thoughtObjId);
     const user = await User.findOne({username: thoughtUsername});
 
     if (!user) {
         return res.status(404).json({ message: 'User not found' 
         });
     }
-    // console.log(user);
     user.thoughts = user.thoughts.filter((thought) => thought.toString() !== thoughtObjId.toString())
-    // console.log(user.thoughts);
-    user.save();
-
+    await user.save();
     const deletedThought = await Thought.findOneAndDelete({ _id: req.params.thought });
 
     if (!deletedThought) {
       return res.status(404).json({ message: 'Thought not found' });
     } 
-    res.status(200).json(deletedThought);
-    console.log('Thought deleted');
+    const thoughts = await Thought.find({}).lean();
+    res.status(200).json(thoughts);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err });
@@ -120,13 +95,12 @@ router.post('/reaction/:thoughtId', async (req, res) => {
           reactionBody: req.body.reactionBody, 
           username: req.body.username,
       });
-      console.log(newReaction);
       // Need to save reaction
-      newReaction.save();
+      await newReaction.save();
       thought.reactions.push(newReaction);
-      // Add error handling here later.
-      thought.save();
-      res.status(200).json(thought);
+      await thought.save();
+      const thoughts = await Thought.find({}).lean();
+      res.status(200).json(thoughts);
     }
     catch (err) {
       console.log(err);
@@ -146,10 +120,10 @@ router.delete('/reaction/:thoughtId', async (req, res) => {
         });
       }
       thought.reactions = thought.reactions.filter((reaction) => reaction._id.toString() !== reactionId);
-      thought.save();
+      await thought.save();
       const deleteReaction = await Reaction.findByIdAndDelete({ _id: reactionId });
-      // res.status(200).json(deleteReaction);
-      console.log('Deleted reaction');
+      const thoughts = await Thought.find({}).lean();
+      res.status(200).json(thoughts);
     }
     catch (err) {
       console.log(err);
