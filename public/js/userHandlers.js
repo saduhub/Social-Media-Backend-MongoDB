@@ -18,6 +18,8 @@ const deleteUserHandler = async (event) => {
         if (response.ok) {
             // document.getElementById('error-message').textContent = 'User Successfully Deleted.';
             // showModal();
+            const updateToUsers = await response.json();
+            window.updateDisplay(updateToUsers);
             return;
         } else {
             console.log('Something went wrong');
@@ -113,6 +115,8 @@ const addFriendHandler = async (event) => {
         if (response.ok) {
             // document.getElementById('error-message').textContent = 'Friend Successfully Added.';
             // showModal();
+            const updateToUsers = await response.json();
+            window.updateDisplay(updateToUsers);
             return;
         } else {
             console.log('Something went wrong');
@@ -141,6 +145,8 @@ const removeFriendHandler = async (event) => {
         if (response.ok) {
             // document.getElementById('error-message').textContent = 'Friend Successfully Removed.';
             // showModal();
+            const updateToUsers = await response.json();
+            window.updateDisplay(updateToUsers);
             return;
         } else {
             console.log('Something went wrong');

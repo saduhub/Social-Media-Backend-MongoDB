@@ -18,6 +18,8 @@ const deleteThoughtHandler = async (event) => {
         if (response.ok) {
             // document.getElementById('error-message').textContent = 'Thought Successfully Deleted.';
             // showModal();
+            const updateToThoughts = await response.json();
+            window.updateDisplay(updateToThoughts);
             return;
         } else {
             console.log('Something went wrong');
@@ -50,6 +52,8 @@ const createThoughtHandler = async (event) => {
         if (response.ok) {
             // document.getElementById('error-message').textContent = 'Thought Successfully Created.';
             // showModal();
+            const updateToThoughts = await response.json();
+            window.updateDisplay(updateToThoughts);
             return;
         } else {
             console.log('Something went wrong');
@@ -83,6 +87,8 @@ const updateThoughtHandler = async (event) => {
         if (response.ok) {
             // document.getElementById('error-message').textContent = 'Thought Successfully Updated.';
             // showModal();
+            const updateToThoughts = await response.json();
+            window.updateDisplay(updateToThoughts);
             return;
         } else {
             console.log('Something went wrong');
@@ -114,6 +120,8 @@ const createReactionHandler = async (event) => {
         if (response.ok) {
             // document.getElementById('error-message').textContent = 'Reaction Successfully Created.';
             // showModal();
+            const updateToThoughts = await response.json();
+            window.updateDisplay(updateToThoughts);
             return;
         } else {
             console.log('Something went wrong');
@@ -142,6 +150,8 @@ const deleteReactionHandler = async (event) => {
         if (response.ok) {
             // document.getElementById('error-message').textContent = 'Reaction Successfully Deleted.';
             // showModal();
+            const updateToThoughts = await response.json();
+            window.updateDisplay(updateToThoughts);
             return;
         } else {
             console.log('Something went wrong');

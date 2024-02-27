@@ -12,7 +12,7 @@ router.get('/allusers', async (req, res) => {
       showUsers: true  
     });
   } catch (err) {
-    console.log(Error);
+    console.log(err);
     res.status(500).json({ message: err });
   }
 });
@@ -62,22 +62,13 @@ router.put('/:user', async (req, res) => {
 router.delete('/:user', async (req, res) => {
   try {
     const userThoughts = await Thought.deleteMany({username: req.params.user})
-    // console.log('Updating user:', req.params.user);
     const deletedUser = await User.findOneAndDelete({ _id: req.params.user });
 
     if (!deletedUser) {
       return res.status(404).json({ message: 'User not found' });
     } 
-    // Need to refresh on client side?
     const users = await User.find({}).lean();
-    res.render('home', { 
-        users, 
-        layout: 'main',
-        showPayload: true,
-        showDisplay: true,
-        showUsers: true  
-    });
-    console.log('User and Thoughts deleted');
+    res.status(200).json(users);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err });
@@ -87,16 +78,15 @@ router.delete('/:user', async (req, res) => {
 // Add friends
 router.post('/add/:user', async (req, res) => {
     try {
-      // console.log('Adding friend to user:', req.params.user);
       const user = await User.findOne({ username: req.params.user });
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }   
       //   Becuase of the user schema, mongoose automatically knows that id's pushed are object id's.
       user.friends.push(req.body.addId);
-      user.save();
-      // res.status(200).json(user);
-      console.log('Added Friend');
+      await user.save();
+      const users = await User.find({}).lean();
+      res.status(200).json(users);
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: err });
@@ -105,16 +95,15 @@ router.post('/add/:user', async (req, res) => {
 // Remove friends
 router.delete('/remove/:user', async (req, res) => {
     try {
-      console.log('Removing friend from user:', req.params.user);
       const user = await User.findOne({ username: req.params.user });
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }   
     // Only keep id's that do not match userId.
       user.friends = user.friends.filter((friend) => friend.toString() !== req.body.userId)
-      user.save();
-      res.status(200).json(user);
-      console.log('Removed Friend');
+      await user.save();
+      const users = await User.find({}).lean();
+      res.status(200).json(users);
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: err });
